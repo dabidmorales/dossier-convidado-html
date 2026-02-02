@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theatrical Dossier | Production Title</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        theatre: {
+                            dark: '#1a1a1a',       /* Deep Charcoal */
+                            darker: '#121212',     /* Darker Charcoal */
+                            gold: '#d4af37',       /* Gold */
+                            goldlight: '#eac159',  /* Gold Light */
+                            ivory: '#f5f5f5',      /* Ivory */
+                            mist: 'rgba(245, 245, 245, 0.7)',
+                            overlay: 'rgba(26, 26, 26, 0.85)'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Lato"', 'sans-serif'],
+                    },
+                    backgroundImage: {
+                        'hero-pattern': "url('https://images.unsplash.com/photo-1507676184212-d03ab07a11d0?q=80&w=2069&auto=format&fit=crop')",
+                        'texture': "url('https://www.transparenttextures.com/patterns/black-linen.png')"
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom CSS for specific overrides and animations -->
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #f5f5f5;
+        }
+        
+        .gold-glow {
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+        }
+        
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+            will-change: opacity, visibility;
+        }
+        
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #444;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #d4af37;
+        }
+        
+        .nav-link::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 1px;
+            background: #d4af37;
+            transition: width .3s;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased selection:bg-theatre-gold selection:text-theatre-dark relative">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4 bg-theatre-dark/90 backdrop-blur-sm border-b border-white/5">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="#" class="font-serif text-xl md:text-2xl font-bold tracking-widest text-theatre-gold uppercase">
+                Production<span class="text-theatre-ivory">Title</span>
+            </a>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="#synopsis" class="nav-link text-sm uppercase tracking-wider hover:text-theatre-gold transition-colors">Synopsis</a>
+                <a href="#objectives" class="nav-link text-sm uppercase tracking-wider hover:text-theatre-gold transition-colors">Intent</a>
+                <a href="#staging" class="nav-link text-sm uppercase tracking-wider hover:text-theatre-gold transition-colors">Staging</a>
+                <a href="#cast" class="nav-link text-sm uppercase tracking-wider hover:text-theatre-gold transition-colors">Company</a>
+                <a href="#technical" class="nav-link text-sm uppercase tracking-wider hover:text-theatre-gold transition-colors">Tech</a>
+                <a href="mailto:contact@production.com" class="border border-theatre-gold text-theatre-gold px-4 py-2 text-xs uppercase tracking-widest hover:bg-theatre-gold hover:text-theatre-dark transition-all duration-300">Book Now</a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="menu-btn" class="md:hidden text-theatre-gold focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu" class="fixed inset-0 bg-theatre-darker z-40 transform translate-x-full transition-transform duration-300 flex flex-col justify-center items-center md:hidden space-y-8">
+            <button id="close-menu-btn" class="absolute top-6 right-6 text-theatre-ivory focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+            <a href="#synopsis" class="mobile-link text-2xl font-serif text-theatre-ivory hover:text-theatre-gold">Synopsis</a>
+            <a href="#objectives" class="mobile-link text-2xl font-serif text-theatre-ivory hover:text-theatre-gold">Intent</a>
+            <a href="#staging" class="mobile-link text-2xl font-serif text-theatre-ivory hover:text-theatre-gold">Staging</a>
+            <a href="#cast" class="mobile-link text-2xl font-serif text-theatre-ivory hover:text-theatre-gold">Company</a>
+            <a href="#technical" class="mobile-link text-2xl font-serif text-theatre-ivory hover:text-theatre-gold">Technical</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative h-screen flex items-center justify-center overflow-hidden">
+        <!-- Background Image with Overlay -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1544256718-3bcf237f3974?q=80&w=2071&auto=format&fit=crop" alt="Theatrical Stage" class="w-full h-full object-cover opacity-40">
+            <div class="absolute inset-0 bg-gradient-to-b from-theatre-dark/50 via-theatre-dark/20 to-theatre-dark"></div>
+        </div>
+
+        <div class="relative z-10 text-center px-4 max-w-4xl mx-auto fade-in-section">
+            <p class="text-theatre-gold uppercase tracking-[0.3em] mb-4 text-sm md:text-base animate-slideDown">A New Production By Company Name</p>
+            <h1 class="font-serif text-5xl md:text-7xl lg:text-8xl font-bold mb-6 text-theatre-ivory leading-tight gold-glow">
+                The <span class="text-theatre-gold italic">Velvet</span> Curtain
+            </h1>
+            <p class="font-light text-lg md:text-xl text-theatre-mist mb-12 max-w-2xl mx-auto leading-relaxed">
+                An immersive journey through silence and shadow. <br class="hidden md:block">Where the unspoken becomes the loudest cry.
+            </p>
+            <div class="flex flex-col md:flex-row gap-6 justify-center items-center">
+                <a href="#synopsis" class="bg-theatre-gold text-theatre-dark px-8 py-3 uppercase tracking-widest font-bold text-xs md:text-sm hover:bg-theatre-goldlight transition-colors transform hover:scale-105 duration-300">
+                    Discover The Story
+                </a>
+                <a href="#technical" class="border border-theatre-ivory/30 text-theatre-ivory px-8 py-3 uppercase tracking-widest text-xs md:text-sm hover:border-theatre-gold hover:text-theatre-gold transition-colors">
+                    Download Dossier
+                </a>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-theatre-gold/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
+        </div>
+    </header>
+
+    <!-- Synopsis Section -->
+    <section id="synopsis" class="py-24 bg-theatre-dark relative">
+        <div class="container mx-auto px-6 max-w-5xl">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                <div class="fade-in-section">
+                    <div class="w-full h-[500px] relative">
+                         <!-- Placeholder for conceptual image -->
+                         <div class="absolute inset-0 border border-theatre-gold/20 transform translate-x-4 translate-y-4"></div>
+                         <img src="https://images.unsplash.com/photo-1543857770-3444bf37db0e?q=80&w=1964&auto=format&fit=crop" alt="Synopsis Mood" class="w-full h-full object-cover relative z-10 grayscale hover:grayscale-0 transition-all duration-700">
+                    </div>
+                </div>
+                <div class="fade-in-section">
+                    <h2 class="font-serif text-4xl md:text-5xl text-theatre-gold mb-8">Synopsis</h2>
+                    <p class="text-theatre-mist text-lg leading-loose mb-6 font-light">
+                        In a world stripped of color, one artisan fights to remember the shade of gold. <span class="italic text-theatre-ivory">The Velvet Curtain</span> follows the fragmented memories of Elias, a costume designer trapped in a looping rehearsal of his masterpiece that never premieres.
+                    </p>
+                    <p class="text-theatre-mist text-lg leading-loose font-light">
+                        As the lines between the script and reality blur, the audience is invited to question: Is the play a tragedy of forgetting, or a triumph of imagination?
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quote / Separator -->
+    <section class="py-20 bg-theatre-darker border-y border-white/5">
+        <div class="container mx-auto px-6 text-center fade-in-section">
+            <blockquote class="font-serif text-2xl md:text-4xl italic text-theatre-ivory/80 max-w-4xl mx-auto leading-relaxed">
+                "We are the stuff that dreams are made on, and our little life is rounded with a sleep."
+            </blockquote>
+            <cite class="block mt-6 text-theatre-gold text-sm tracking-widest uppercase">— William Shakespeare, The Tempest</cite>
+        </div>
+    </section>
+
+    <!-- Objectives / Statement of Intent -->
+    <section id="objectives" class="py-24 bg-theatre-dark">
+        <div class="container mx-auto px-6 max-w-4xl text-center">
+            <h2 class="font-serif text-3xl md:text-4xl text-theatre-ivory mb-2 fade-in-section">Artistic Intent</h2>
+            <div class="w-24 h-1 bg-theatre-gold mx-auto mb-12 fade-in-section"></div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+                <div class="bg-white/5 p-8 border border-white/5 hover:border-theatre-gold/30 transition-colors duration-300 fade-in-section">
+                    <h3 class="font-serif text-xl text-theatre-gold mb-4">The Atmosphere</h3>
+                    <p class="text-theatre-mist leading-relaxed font-light">
+                        To create a claustrophobic yet infinite space where lighting defines the boundaries of reality.
+                    </p>
+                </div>
+                <div class="bg-white/5 p-8 border border-white/5 hover:border-theatre-gold/30 transition-colors duration-300 fade-in-section" style="transition-delay: 100ms;">
+                    <h3 class="font-serif text-xl text-theatre-gold mb-4">The Silence</h3>
+                    <p class="text-theatre-mist leading-relaxed font-light">
+                        Exploring the weight of unsaid words. The soundscape is minimal, punctuated by raw, diegetic sounds.
+                    </p>
+                </div>
+                <div class="bg-white/5 p-8 border border-white/5 hover:border-theatre-gold/30 transition-colors duration-300 fade-in-section" style="transition-delay: 200ms;">
+                    <h3 class="font-serif text-xl text-theatre-gold mb-4">The Audience</h3>
+                    <p class="text-theatre-mist leading-relaxed font-light">
+                        Breaking the fourth wall not by address, but by shared vulnerability. We are all waiting in the dark.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Staging / Art Direction -->
+    <section id="staging" class="py-24 bg-theatre-darker">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-white/10 pb-6 fade-in-section">
+                <div>
+                    <h2 class="font-serif text-4xl text-theatre-ivory">Staging & Visuals</h2>
+                    <p class="text-theatre-gold mt-2 uppercase tracking-wider text-sm">Minimalism. Shadow. Texture.</p>
+                </div>
+                <div class="hidden md:block text-right">
+                    <p class="text-theatre-mist text-sm">Set Design: Maria Rossi</p>
+                    <p class="text-theatre-mist text-sm">Lighting: Jean Luc</p>
+                </div>
+            </div>
+
+            <!-- Masonry-style Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="group relative overflow-hidden h-80 fade-in-section">
+                    <img src="https://images.unsplash.com/photo-1514306191717-452ec28c7f42?q=80&w=2070&auto=format&fit=crop" alt="Stage Concept 1" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-70 group-hover:opacity-100">
+                    <div class="absolute bottom-0 left-0 p-6 bg-gradient-to-t from-black to-transparent w-full">
+                        <span class="text-theatre-ivory font-serif italic text-lg">Act I: The Void</span>
+                    </div>
+                </div>
+                <div class="group relative overflow-hidden h-80 lg:col-span-2 fade-in-section">
+                    <img src="https://images.unsplash.com/photo-1516280440614-6697288d5d38?q=80&w=2070&auto=format&fit=crop" alt="Stage Concept 2" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-70 group-hover:opacity-100">
+                    <div class="absolute bottom-0 left-0 p-6 bg-gradient-to-t from-black to-transparent w-full">
+                        <span class="text-theatre-ivory font-serif italic text-lg">Lighting Concept</span>
+                    </div>
+                </div>
+                <div class="group relative overflow-hidden h-80 lg:col-span-2 fade-in-section">
+                    <img src="https://images.unsplash.com/photo-1460723237483-7a6dc9d0b212?q=80&w=2070&auto=format&fit=crop" alt="Stage Concept 3" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-70 group-hover:opacity-100">
+                     <div class="absolute bottom-0 left-0 p-6 bg-gradient-to-t from-black to-transparent w-full">
+                        <span class="text-theatre-ivory font-serif italic text-lg">Costume Detail</span>
+                    </div>
+                </div>
+                <div class="group relative overflow-hidden h-80 fade-in-section">
+                    <img src="https://images.unsplash.com/photo-1594122230689-45899d9e6f69?q=80&w=2070&auto=format&fit=crop" alt="Stage Concept 4" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-70 group-hover:opacity-100">
+                     <div class="absolute bottom-0 left-0 p-6 bg-gradient-to-t from-black to-transparent w-full">
+                        <span class="text-theatre-ivory font-serif italic text-lg">Act III: Resolution</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Company / Cast -->
+    <section id="cast" class="py-24 bg-theatre-dark">
+        <div class="container mx-auto px-6">
+            <h2 class="font-serif text-4xl text-center text-theatre-ivory mb-16 fade-in-section">The Company</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Member 1 -->
+                <div class="text-center group fade-in-section">
+                    <div class="w-48 h-64 mx-auto mb-6 overflow-hidden bg-white/5 relative">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1964&auto=format&fit=crop" alt="Actor Name" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
+                    </div>
+                    <h3 class="font-serif text-xl text-theatre-gold">Sarah Bernhardt</h3>
+                    <p class="text-xs uppercase tracking-widest text-theatre-mist mt-1">Lead Actress</p>
+                </div>
+
+                <!-- Member 2 -->
+                <div class="text-center group fade-in-section" style="transition-delay: 100ms;">
+                    <div class="w-48 h-64 mx-auto mb-6 overflow-hidden bg-white/5 relative">
+                        <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=1974&auto=format&fit=crop" alt="Actor Name" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
+                    </div>
+                    <h3 class="font-serif text-xl text-theatre-gold">Laurence Olivier</h3>
+                    <p class="text-xs uppercase tracking-widest text-theatre-mist mt-1">Lead Actor</p>
+                </div>
+
+                <!-- Member 3 -->
+                <div class="text-center group fade-in-section" style="transition-delay: 200ms;">
+                    <div class="w-48 h-64 mx-auto mb-6 overflow-hidden bg-white/5 relative">
+                        <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?q=80&w=1974&auto=format&fit=crop" alt="Director Name" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
+                    </div>
+                    <h3 class="font-serif text-xl text-theatre-gold">Julie Taymor</h3>
+                    <p class="text-xs uppercase tracking-widest text-theatre-mist mt-1">Director</p>
+                </div>
+
+                <!-- Member 4 -->
+                <div class="text-center group fade-in-section" style="transition-delay: 300ms;">
+                    <div class="w-48 h-64 mx-auto mb-6 overflow-hidden bg-white/5 relative">
+                         <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1974&auto=format&fit=crop" alt="Crew Name" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
+                    </div>
+                    <h3 class="font-serif text-xl text-theatre-gold">Hans Zimmer</h3>
+                    <p class="text-xs uppercase tracking-widest text-theatre-mist mt-1">Composer</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Rider -->
+    <section id="technical" class="py-24 bg-theatre-darker">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <h2 class="font-serif text-3xl md:text-4xl text-theatre-gold mb-12 fade-in-section border-l-4 border-theatre-gold pl-6">Technical Requirements</h2>
+            
+            <div class="bg-white/5 p-8 rounded-sm fade-in-section">
+                <table class="w-full text-left border-collapse">
+                    <tbody>
+                        <tr class="border-b border-white/10">
+                            <td class="py-4 font-bold text-theatre-ivory w-1/3">Stage Dimensions</td>
+                            <td class="py-4 text-theatre-mist">Minimum 10m Width x 8m Depth</td>
+                        </tr>
+                        <tr class="border-b border-white/10">
+                            <td class="py-4 font-bold text-theatre-ivory">Lighting</td>
+                            <td class="py-4 text-theatre-mist">Standard Rig + 6 Floods (Warm), 2 Follow Spots. <br><span class="text-xs italic text-gray-500">Full plot available on request.</span></td>
+                        </tr>
+                        <tr class="border-b border-white/10">
+                            <td class="py-4 font-bold text-theatre-ivory">Sound</td>
+                            <td class="py-4 text-theatre-mist">PA System suitable for venue size, 2 Wireless Headsets, QLab Input at control desk.</td>
+                        </tr>
+                        <tr class="border-b border-white/10">
+                            <td class="py-4 font-bold text-theatre-ivory">Set Up Time</td>
+                            <td class="py-4 text-theatre-mist">4 Hours minimum prior to House Open.</td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 font-bold text-theatre-ivory">Crew Needed</td>
+                            <td class="py-4 text-theatre-mist">1 Light Op, 1 Sound Op (provided by venue if touring crew unavailable).</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="mt-8 flex justify-end">
+                    <button class="flex items-center space-x-2 text-theatre-gold hover:text-white transition-colors uppercase text-sm tracking-widest font-bold">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        </svg>
+                        <span>Download Full Rider (PDF)</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-theatre-dark border-t border-white/5 py-12">
+        <div class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-6 md:mb-0 text-center md:text-left">
+                <a href="#" class="font-serif text-2xl font-bold text-theatre-gold uppercase">Production<span class="text-theatre-ivory">Title</span></a>
+                <p class="text-gray-500 text-sm mt-2">&copy; 2024 Theatre Company. All Rights Reserved.</p>
+            </div>
+            
+            <div class="flex space-x-6">
+                <!-- Social Icons -->
+                <a href="#" class="text-gray-500 hover:text-theatre-gold transition-colors">
+                    <span class="sr-only">Instagram</span>
+                    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                </a>
+                <a href="#" class="text-gray-500 hover:text-theatre-gold transition-colors">
+                     <span class="sr-only">Twitter</span>
+                     <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactivity Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- Mobile Menu Toggle ---
+            const menuBtn = document.getElementById('menu-btn');
+            const closeMenuBtn = document.getElementById('close-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileLinks = document.querySelectorAll('.mobile-link');
+
+            function toggleMenu() {
+                const isClosed = mobileMenu.classList.contains('translate-x-full');
+                if (isClosed) {
+                    mobileMenu.classList.remove('translate-x-full');
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    mobileMenu.classList.add('translate-x-full');
+                    document.body.style.overflow = 'auto';
+                }
+            }
+
+            menuBtn.addEventListener('click', toggleMenu);
+            closeMenuBtn.addEventListener('click', toggleMenu);
+
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', toggleMenu);
+            });
+
+            // --- Sticky Navbar Color Change on Scroll ---
+            const navbar = document.getElementById('navbar');
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('bg-black/95', 'py-2');
+                    navbar.classList.remove('bg-theatre-dark/90', 'py-4');
+                } else {
+                    navbar.classList.remove('bg-black/95', 'py-2');
+                    navbar.classList.add('bg-theatre-dark/90', 'py-4');
+                }
+            });
+
+            // --- Intersection Observer for Fade-in Animations ---
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, observerOptions);
+
+            const fadeElements = document.querySelectorAll('.fade-in-section');
+            fadeElements.forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+</html>
